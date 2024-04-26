@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTD Search Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="navbar">
+        <!-- <label for="fileInput" class="img-4"><img src="../static/assets/add-icon.png" alt="Upload Icon"></label>
+        <input type="file" id="fileInput" name="file" accept=".pptx, .pdf" style="display: none;"> -->
+            <a href="https://defend.id/">
+                <img src="static\assets\defendid.png" alt="logo-mtd" class="img1">
+            </a>
+            
+            <a href="https://www.len.co.id/">
+                <img src="static\assets\len.png" alt="logo-len" class="img2">
+            </a>
+        <div class="logo-above-button">
+            <img src="static\assets\mtd.png" alt="mtd" class="img3">
+        </div>
+    </div>
+    <div class="box">
+        <form action="/search" method="post">
+            <input type="text" name="keyword" placeholder="Enter keyword..." required>
+            <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0z"/>
+                    <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+</body>
+
+<label for="fileInput" class="choose-file"><img src="../static/assets/add-icon.png" alt="Upload Icon"></label>
+<input type="file" id="fileInput" name="file" accept=".pptx, .pdf" style="display: none;">
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+    
+    fileInput.addEventListener('input', async function() {
+        if (fileInput.files.length > 0) {
+            const confirmation = confirm('Are you sure you want to upload this file?');
+            if (confirmation) {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+
+                try {
+                    const response = await fetch('/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert('File successfully uploaded');
+                    } else {
+                        alert('Failed to upload file');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while uploading file');
+                }
+
+                fileInput.value = ''; // Clear file input
+            }
+        }
+    });
+</script>
+</html>
